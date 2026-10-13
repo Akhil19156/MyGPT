@@ -218,3 +218,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local environment variables and secrets
+.env
+.env.*
+
+# Keep an example environment file in GitHub
+!.env.example
+
+# Python virtual environment
+.venv/
