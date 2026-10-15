@@ -47,13 +47,8 @@ init_db()
 
 
 @app.get("/")
-async def home(request: Request):
-    return templates.TemplateResponse(
-        request=request,
-        name="index.html",
-        context={}
-    )
-
+async def home():
+    return {"status": "ok", "message": "MyGPT backend is running"}
 
 
 @app.get("/conversations")
