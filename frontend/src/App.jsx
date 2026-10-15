@@ -2,6 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Message from "./components/Message.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 
+const API_BASE = import.meta.env.VITE_API_URL || "";
+
+
 const DEFAULT_MODEL = "gemini-2.5-flash";
 const MODELS = [
   "gemini-2.5-flash",
@@ -68,7 +71,7 @@ export default function App() {
 
   const loadConversations = useCallback(async () => {
     try {
-      const response = await fetch("/conversations");
+      const response = await fetch(`${API_BASE}/conversations`);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
       setConversations(data.conversations || []);
@@ -83,7 +86,7 @@ export default function App() {
     setToolStatus("");
     setStatus("Loading chat...");
     try {
-      const response = await fetch(`/history/${encodeURIComponent(selectedId)}`);
+      const response = await fetch(`${API_BASE}/history/${encodeURIComponent(selectedId)}`);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
       setMessages((data.messages || []).map((item, index) => ({
@@ -247,7 +250,7 @@ export default function App() {
     };
 
     try {
-      const response = await fetch("/chat/stream", {
+      const response = await fetch(`${API_BASE}/chat/stream` {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text, thread_id: threadId, model })
@@ -301,7 +304,7 @@ export default function App() {
     formData.append("file", file);
     formData.append("thread_id", threadId);
     try {
-      const response = await fetch("/upload", { method: "POST", body: formData });
+      const response = awaitfetch(`${API_BASE}/upload` , { method: "POST", body: formData });
       const data = await response.json();
       if (!response.ok || !data.success) throw new Error(data.message || data.detail || "Upload failed.");
       setMessages((previous) => [
